@@ -10,7 +10,7 @@ Feature: Login to Borland Insurance Web
   Scenario: Login to Borland website
     Given User is on the home page with login option
     When User enters username in email field
-    When User enters password in Password field
+    And User enters password in Password field
     And clicks Login button
     Then Login should be successful
     And Logged in User's name should be displayed
