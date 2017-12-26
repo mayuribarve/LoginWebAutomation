@@ -9,32 +9,35 @@ wb = xlrd.open_workbook('features/steps/AutomationTestData.xlsx')
 ws = wb.sheet_by_name("Login")
 
 
-@given("User opens Borland website")
-def step_impl(context):
-    browser.get('http://demo.borland.com/InsuranceWebExtJS/index.jsf')
-
-
-@then("print the title")
-def step_impl(context):
-    title = browser.title
-    print("\n Website title is " + str(title))
-
-
-@given("User is on the home page with login option")
-def step_impl(context):
-    try:
-        assert True
-        assert browser.title == "InsuranceWeb: Home"
-        print("\n user is on the home page" )
-    except AssertionError:
-        print("\n Fail to open borland home page")
-        pass
-
-for row in range(ws.nrows):
+for row in range(1, ws.nrows):
     if ws.cell(row, 0) == xlrd.XL_CELL_EMPTY:
         print("break")
         break
     else:
+        time.sleep(2)
+        print('\nuser 1 ' + ws.cell(row,1).value)
+        @given("User opens Borland website")
+        def step_impl(context):
+            browser.get('http://demo.borland.com/InsuranceWebExtJS/index.jsf')
+
+
+        @then("print the title")
+        def step_impl(context):
+            title = browser.title
+            print("\n Website title is " + str(title))
+
+
+        @given("User is on the home page with login option")
+        def step_impl(context):
+            try:
+                assert True
+                assert browser.title == "InsuranceWeb: Home"
+                print("\n user is on the home page" )
+            except AssertionError:
+                print("\n Fail to open borland home page")
+                pass
+
+
         @when("User enters username in email field")
         def step_impl(context):
             try:
@@ -44,7 +47,7 @@ for row in range(ws.nrows):
                 print("\n " + str(row) + "username: " + str(username))
                 # username = input("Enter username: ")
                 emailfield = browser.find_element_by_id("login-form:email")
-                emailfield.clear()
+                #emailfield.clear()
                 time.sleep(2)
                 emailfield.send_keys(username)
                 emailfield.click()
@@ -62,7 +65,7 @@ for row in range(ws.nrows):
                 password = ws.cell(row, 3).value
                 print("\n " + str(row) + "password: " + str(password))
                 passfield = browser.find_element_by_id("login-form:password")
-                passfield.clear()
+                #passfield.clear()
                 time.sleep(1)
                 passfield.send_keys(password)
                 time.sleep(1)
@@ -110,31 +113,3 @@ for row in range(ws.nrows):
 
 
 
-
-
-# def step_impl(context):
-#     try:
-#         assert True
-#         assert ws.cell(row, 3) != xlrd.XL_CELL_EMPTY
-#         password = ws.cell(row, 3).value
-#         print("\n password: " + str(password))
-#         passfield = browser.find_element_by_id("login-form:password")
-#         passfield.clear()
-#         passfield.send_keys(password)
-#         print(password)
-#         time.sleep(1)
-#     except AssertionError:
-#         print("Invalid password")
-#         pass
-
-# def step_impl(context):
-#     try:
-#         assert True
-#         assert browser.find_element_by_id("login-form:login")
-#         loginbutton = browser.find_element_by_id("login-form:login")
-#         loginbutton.click()
-#         print("login clicked")
-#         time.sleep(1)
-#     except AssertionError:
-#         print("Login button not found")
-#         pass
